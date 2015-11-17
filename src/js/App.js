@@ -1,4 +1,5 @@
 import React from 'react';
+import Card from './Card';
 
 export default React.createClass({
   propTypes: {
@@ -10,6 +11,14 @@ export default React.createClass({
     };
   },
   render () {
-    return <div>app {this.props.size}</div>;
+    return (
+      <ul className="card-container">
+        {
+          Array(this.props.size).fill().map((c, i) => {
+            return <Card num={i} key={i} />;
+          })
+        }
+      </ul>
+    );
   }
 });

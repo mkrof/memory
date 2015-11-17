@@ -5,5 +5,7 @@
       "space-before-function-paren": [2, "always"],
       "no-console": 1,
       "no-alert": 1,
+      // Disabled this to allow implicit returns from arrow functions.
+      "no-unused-expressions": 0,
     }
 }
