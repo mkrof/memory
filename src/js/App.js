@@ -6,7 +6,7 @@ export default React.createClass({
   },
   getDefaultProps () {
     return {
-      size: 20
+      size: 50
     };
   },
   render () {
