@@ -1,3 +1,6 @@
-require('../sass/app.scss');
+import {} from '../sass/app.scss';
+import React from 'react';
+import ReactDom from 'react-dom';
+import App from './App';
 
-console.log('main.');
+ReactDom.render(<App />, document.getElementById('app-container'));

@@ -1,12 +1,8 @@
-var webpack = require('webpack'),
-    path = require('path');
+var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
-  context: path.resolve('src/js'),
-  entry: './main',
-  resolve: {
-    modulesDirectories: ['.'],
-  },
+  entry: './src/js/main',
   output: {
     path: path.resolve('build/js'),
     publicPath: '/public/assets/js',
@@ -20,12 +16,12 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/,
+        include: path.join(__dirname, 'src'),
         query: {
           cacheDirectory: true,
-          presets: ['es2015']
+          presets: ['es2015', 'react']
         }
-      },{
+      }, {
         test: /\.scss/,
         loader: 'style-loader!css-loader!sass-loader',
         exclude: /node_modules/
