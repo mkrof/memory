@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from './Card';
+import shuffle from 'lodash.shuffle';
 
 export default React.createClass({
   propTypes: {
@@ -7,15 +8,20 @@ export default React.createClass({
   },
   getDefaultProps () {
     return {
-      size: 50
+      size: 10
     };
+  },
+  getCardArray (size) {
+    const cards = Array(size).fill()
+      .map((c, i) => { return i; });
+    return shuffle(cards.concat(cards));
   },
   render () {
     return (
       <ul className="card-container">
         {
-          Array(this.props.size).fill().map((c, i) => {
-            return <Card num={i} key={i} />;
+          this.getCardArray(this.props.size).map((c, i) => {
+            return <Card num={c} key={i} />;
           })
         }
       </ul>

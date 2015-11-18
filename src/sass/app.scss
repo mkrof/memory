@@ -13,5 +13,14 @@ body {
     margin: 10px;
     border-radius: 6px;
     float: right;
+    .card-img {
+      visibility: hidden;
+    }
+    &.shown {
+      background: #A5F5F5;
+      .card-img {
+        visibility: visible;
+      }
+    }
   }
 }
