@@ -2,10 +2,11 @@
     "extends": "airbnb",
     "rules": {
       "comma-dangle": 0,
-      "space-before-function-paren": [2, "always"],
-      "no-console": 1,
+      "indent": [2, 2, {"SwitchCase": 1}],
+      "new-cap": 0,
       "no-alert": 1,
-      // Disabled this to allow implicit returns from arrow functions.
+      "no-console": 1,
       "no-unused-expressions": 0,
+      "space-before-function-paren": [2, "always"]
     }
 }
