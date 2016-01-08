@@ -1,30 +1,34 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Card from './Card';
-import shuffle from 'lodash.shuffle';
+import { onCardClick } from './actions';
+import { connect } from 'react-redux';
 
-export default React.createClass({
+const App = React.createClass({
+
   propTypes: {
-    size: React.PropTypes.number
+    cards: PropTypes.array
   },
-  getDefaultProps () {
-    return {
-      size: 10
-    };
+
+  handleClick (id) {
+    onCardClick(id);
   },
-  getCardArray (size) {
-    const cards = Array(size).fill()
-      .map((c, i) => { return i; });
-    return shuffle(cards.concat(cards));
-  },
+
   render () {
     return (
       <ul className="card-container">
         {
-          this.getCardArray(this.props.size).map((c, i) => {
-            return <Card num={c} key={i} />;
+          this.props.cards.map((c, i) => {
+            return <Card label={c.label} id={c.id} key={i} isShown={c.isShown} onCardClick={this.handleClick} />;
           })
         }
       </ul>
     );
   }
+
 });
+
+export default connect(
+  state => ({
+    cards: state.cards
+  })
+)(App);

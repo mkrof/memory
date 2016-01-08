@@ -1,28 +1,20 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 export default React.createClass({
 
   propTypes: {
-    num: React.PropTypes.number
-  },
-
-  getInitialState () {
-    return {
-      shown: false
-    };
-  },
-
-  onCardClick () {
-    console.log(`${this.props.num} clicked`);
-    this.setState({shown: !this.state.shown});
+    id: PropTypes.string,
+    label: PropTypes.number,
+    isShown: PropTypes.bool,
+    onCardClick: PropTypes.func
   },
 
   render () {
-    let classNames = this.state.shown ? 'shown' : 'covered';
+    const classNames = this.props.isShown ? 'shown' : 'covered';
     return (
-      <li className={classNames} onClick={this.onCardClick}>
+      <li className={classNames} onClick={() => this.props.onCardClick(this.props.id)}>
         <div className="card-img">
-          {this.props.num}
+          {this.props.label}
         </div>
       </li>
     );

@@ -1,6 +1,10 @@
 import {} from '../sass/app.scss';
+import { render } from 'react-dom';
 import React from 'react';
-import ReactDom from 'react-dom';
 import App from './App';
+import store from './store';
 
-ReactDom.render(<App />, document.getElementById('app-container'));
+render(
+  <App store={store}/>,
+  document.getElementById('app-container')
+);
