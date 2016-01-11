@@ -6,11 +6,14 @@ export default React.createClass({
     id: PropTypes.string,
     label: PropTypes.number,
     isShown: PropTypes.bool,
+    isMatched: PropTypes.bool,
     onCardClick: PropTypes.func
   },
 
   render () {
-    const classNames = this.props.isShown ? 'shown' : 'covered';
+    const shownCls = this.props.isShown ? 'shown' : 'covered';
+    const matchedCls = this.props.isMatched ? 'matched' : '';
+    const classNames = `${shownCls} ${matchedCls}`;
     return (
       <li className={classNames} onClick={() => this.props.onCardClick(this.props.id)}>
         <div className="card-img">

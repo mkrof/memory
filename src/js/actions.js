@@ -1,6 +1,6 @@
 import store from './store';
 
-export const REVEAL_CARD = 'memory.completematch';
+export const REVEAL_CARD = 'memory.revealcard';
 export const COMPLETE_MATCH = 'memory.completematch';
 export const HIDE_UNMATCHED = 'memory.hideunmatched';
 
@@ -29,19 +29,21 @@ export const onCardClick = id => {
 
   const cards = store.getState().cards;
   const clickedCard = cards.filter(c => c.id === id)[0];
+  const shownCard = cards.filter(c => c.isShown && !c.isMatched)[0];
 
   if (clickedCard.isMatched || clickedCard.isShown) {
     return;
   }
 
-  const shownCards = cards.filter(c => c.isShown && !c.isMatched);
-
-  if (shownCards.length === 1 && shownCards[0].label === clickedCard.label) {
-    store.dispatch(completeMatch(id, shownCards[0].id));
-  } else if (shownCards.length <= 1) {
+  if (!shownCard) {
     store.dispatch(revealCard(id));
-  } else {
-    store.dispatch(hideUnmatched());
+    return;
   }
 
+  if (clickedCard.label === shownCard.label) {
+    store.dispatch(completeMatch([clickedCard.id, shownCard.id]));
+  } else {
+    //todo - add a pause
+    store.dispatch(hideUnmatched([clickedCard.id, shownCard.id]));
+  }
 };

@@ -18,7 +18,12 @@ const App = React.createClass({
       <ul className="card-container">
         {
           this.props.cards.map((c, i) => {
-            return <Card label={c.label} id={c.id} key={i} isShown={c.isShown} onCardClick={this.handleClick} />;
+            return <Card label={c.label}
+              id={c.id}
+              key={i}
+              isShown={c.isShown}
+              isMatched={c.isMatched}
+              onCardClick={this.handleClick} />;
           })
         }
       </ul>

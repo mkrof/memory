@@ -35,29 +35,36 @@ const initialState = {
   cards: getCardArray(config.size)
 };
 
+const changeCardState = (state, index, change) => {
+  return assign({}, state, {
+    cards: [
+      ...state.cards.slice(0, index),
+      assign({}, state.cards[index], change),
+      ...state.cards.slice(index + 1)
+    ]
+  });
+};
+
 export default (state = initialState, action = {}) => {
   switch (action.type) {
     case REVEAL_CARD:
       const index = findIndex(state.cards, card => card.id === action.payload);
-
-      return assign({}, state, {
-        cards: [
-          ...state.cards.slice(0, index),
-          assign({}, state.cards[index], {isShown: true}),
-          ...state.cards.slice(index + 1)
-        ]
-      });
+      return changeCardState(state, index, {isShown: true});
 
     case HIDE_UNMATCHED:
       return assign({}, state, {
         cards: state.cards.map(c => {
-          c.isShown = false;
+          c.isShown = c.isMatched;
           return c;
         })
       });
 
     case COMPLETE_MATCH:
-      return state;
+      // TODO - refactor.
+      const i1 = findIndex(state.cards, card => card.id === action.payload[0]);
+      const i2 = findIndex(state.cards, card => card.id === action.payload[1]);
+      const temp = changeCardState(state, i1, {isMatched: true, isShown: true});
+      return changeCardState(temp, i2, {isMatched: true, isShown: true});
 
     default:
       return state;

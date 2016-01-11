@@ -22,5 +22,8 @@ body {
         visibility: visible;
       }
     }
+    &.matched {
+      border: 5px solid green;
+    }
   }
 }
