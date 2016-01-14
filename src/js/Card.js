@@ -7,7 +7,7 @@ export default React.createClass({
     label: PropTypes.number,
     isShown: PropTypes.bool,
     isMatched: PropTypes.bool,
-    imageUri: PropTypes.string,
+    imageId: PropTypes.number,
     onCardClick: PropTypes.func
   },
 
@@ -15,17 +15,17 @@ export default React.createClass({
     const shownCls = this.props.isShown ? 'shown' : 'covered';
     const matchedCls = this.props.isMatched ? 'matched' : '';
     const classNames = `card-container ${shownCls} ${matchedCls}`;
-    const backStyle = {
-      backgroundImage: `url(${this.props.imageUri})`,
-      backgroundSize: 'cover'
+    const uriTemplate = `http://covers.openlibrary.org/b/id/${this.props.imageId}-L.jpg`;
+    const imageStyle = {
+      backgroundImage: `url(${uriTemplate})`
     };
     return (
-      //<li className={classNames} onClick={() => this.props.onCardClick(this.props.id)}>
       <li className={classNames} onClick={() => this.props.onCardClick(this.props.id)}>
         <div className="card">
           <div className="front">
           </div>
-          <div className="back" style={backStyle}>
+          <div className="back">
+            <div className="image" style={imageStyle}></div>
           </div>
         </div>
       </li>

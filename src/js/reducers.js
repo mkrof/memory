@@ -1,45 +1,10 @@
-import { REVEAL_CARD, HIDE_UNMATCHED, COMPLETE_MATCH } from './actions';
-import shuffle from 'lodash.shuffle';
+import { REVEAL_CARD, HIDE_UNMATCHED, COMPLETE_MATCH, RENDER_CARDS } from './actions';
 import assign from 'lodash.assign';
 import findIndex from 'lodash.findIndex';
-import uuid from 'uuid';
-
-const config = {
-  size: 4
-};
-
-const images = [
-  'https://pixabay.com/static/uploads/photo/2015/10/13/12/28/frog-986026_960_720.jpg',
-  'https://c2.staticflickr.com/4/3040/2554232489_2af929eaf1.jpg',
-  'http://opencage.info/pics/files/800_1909.jpg',
-  'https://c2.staticflickr.com/4/3417/3385110196_d208c4595a.jpg'
-];
-
-const getCardArray = (size) => {
-  const cards = Array(size)
-    .fill()
-    .map((c, i) => { 
-      return {
-        label: i,
-        imageUri: images[i],
-        isShown: false,
-        isMatched: false
-      };
-    });
-
-  return shuffle(
-    cards.concat(
-      cards.map(card => assign({}, card))
-    ).map(card => {
-      card.id = uuid.v1();
-      return card;
-    })
-  );
-
-};
 
 const initialState = {
-  cards: getCardArray(config.size)
+  //cards: getCardArray(config.size)
+  cards: []
 };
 
 const changeCardState = (state, index, change) => {
@@ -54,6 +19,11 @@ const changeCardState = (state, index, change) => {
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
+    case RENDER_CARDS:
+      return assign({}, state, {
+        cards: action.payload
+      });
+
     case REVEAL_CARD:
       const index = findIndex(state.cards, card => card.id === action.payload);
       return changeCardState(state, index, {isShown: true});

@@ -3,6 +3,14 @@ import store from './store';
 export const REVEAL_CARD = 'memory.revealcard';
 export const COMPLETE_MATCH = 'memory.completematch';
 export const HIDE_UNMATCHED = 'memory.hideunmatched';
+export const RENDER_CARDS = 'memory.imagedataloaded';
+
+export const renderCards = payload => {
+  return {
+    type: RENDER_CARDS,
+    payload
+  };
+};
 
 export const revealCard = id => {
   return {
@@ -57,4 +65,3 @@ export const onCardClick = id => {
     }
   }
 };
-
