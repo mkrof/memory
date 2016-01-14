@@ -29,21 +29,32 @@ export const onCardClick = id => {
 
   const cards = store.getState().cards;
   const clickedCard = cards.filter(c => c.id === id)[0];
-  const shownCard = cards.filter(c => c.isShown && !c.isMatched)[0];
+  const shownCards = cards.filter(c => c.isShown && !c.isMatched);
 
-  if (clickedCard.isMatched || clickedCard.isShown) {
+// if the clicked card is shown or matched, do nothing.
+// if there are already 2 shown unmatched cards, do nothing.
+  if (clickedCard.isMatched || clickedCard.isShown || shownCards.length === 2) {
     return;
   }
 
-  if (!shownCard) {
+// if there are no shown cards, show the clicked card.
+  if (shownCards.length === 0) {
     store.dispatch(revealCard(id));
     return;
   }
 
-  if (clickedCard.label === shownCard.label) {
-    store.dispatch(completeMatch([clickedCard.id, shownCard.id]));
-  } else {
-    //todo - add a pause
-    store.dispatch(hideUnmatched([clickedCard.id, shownCard.id]));
+// if there is one shown card
+// - if the clicked card is a match, complete it.
+// - if the clicked card is not a match, show it, then dispatch hide all after 2 seconds.
+  if (shownCards.length === 1) {
+    if (clickedCard.label === shownCards[0].label) {
+      store.dispatch(completeMatch([clickedCard.id, shownCards[0].id]));
+    } else {
+      store.dispatch(revealCard(id));
+      setTimeout(() => {
+        store.dispatch(hideUnmatched([clickedCard.id, shownCards[0].id]));
+      }, 1500);
+    }
   }
 };
+

@@ -5,8 +5,15 @@ import findIndex from 'lodash.findIndex';
 import uuid from 'uuid';
 
 const config = {
-  size: 2
+  size: 4
 };
+
+const images = [
+  'https://pixabay.com/static/uploads/photo/2015/10/13/12/28/frog-986026_960_720.jpg',
+  'https://c2.staticflickr.com/4/3040/2554232489_2af929eaf1.jpg',
+  'http://opencage.info/pics/files/800_1909.jpg',
+  'https://c2.staticflickr.com/4/3417/3385110196_d208c4595a.jpg'
+];
 
 const getCardArray = (size) => {
   const cards = Array(size)
@@ -14,7 +21,7 @@ const getCardArray = (size) => {
     .map((c, i) => { 
       return {
         label: i,
-        imgUri: 'imgUri',
+        imageUri: images[i],
         isShown: false,
         isMatched: false
       };
