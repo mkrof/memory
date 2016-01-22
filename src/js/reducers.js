@@ -1,10 +1,12 @@
-import { REVEAL_CARD, HIDE_UNMATCHED, COMPLETE_MATCH, RENDER_CARDS } from './actions';
+import { REVEAL_CARD, HIDE_UNMATCHED, COMPLETE_MATCH, RENDER_CARDS, CLOSE_MODAL, SET_DIFFICULTY } from './actions';
 import assign from 'lodash.assign';
 import findIndex from 'lodash.findIndex';
+import config from './config';
 
 const initialState = {
-  //cards: getCardArray(config.size)
-  cards: []
+  cards: [],
+  isModalOpen: true,
+  difficulty: config.difficulties[0].cardCount
 };
 
 const changeCardState = (state, index, change) => {
@@ -42,6 +44,12 @@ export default (state = initialState, action = {}) => {
       const i2 = findIndex(state.cards, card => card.id === action.payload[1]);
       const temp = changeCardState(state, i1, {isMatched: true, isShown: true});
       return changeCardState(temp, i2, {isMatched: true, isShown: true});
+
+    case CLOSE_MODAL:
+      return assign({}, state, {isModalOpen: false});
+
+    case SET_DIFFICULTY:
+      return assign({}, state, {difficulty: action.payload});
 
     default:
       return state;
