@@ -1,6 +1,9 @@
 $cardSize: 128px;
 $imagePadding: 10px;
 
+$cardPatternColor1: #FFF;
+$cardPatternColor2: #EEE;
+
 body {
   background: #F5F5F5;
 }
@@ -32,6 +35,16 @@ body {
       width: $cardSize - $imagePadding;
       height: $cardSize - $imagePadding;
     }
+  }
+  .front {
+    border: 6px solid $cardPatternColor2;
+    background: repeating-linear-gradient(
+      315deg,
+      $cardPatternColor1,
+      $cardPatternColor1 4px,
+      $cardPatternColor2 4px,
+      $cardPatternColor2 8px
+    )
   }
 }
 
