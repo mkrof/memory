@@ -1,11 +1,12 @@
 $cardSize: 128px;
 $imagePadding: 10px;
 
-$cardPatternColor1: #FFF;
-$cardPatternColor2: #EEE;
+$cardPatternColor1: #519548;
+$cardPatternColor2: #88C425;
+$cardBg: #A5D6CC;
 
 body {
-  background: #F5F5F5;
+  background: #EAFDE6;
 }
 
 .cards {
@@ -13,7 +14,7 @@ body {
 }
 
 .card-container {
-  margin: 10px;
+  margin: 13px;
   float: right;
   perspective: 700px;
   &.shown .card {
@@ -27,6 +28,7 @@ body {
   }
   .back {
     transform: rotateY(180deg);
+    background-color: white;
     .image {
       background-size: contain;
       background-position: center;
@@ -37,14 +39,15 @@ body {
     }
   }
   .front {
-    border: 6px solid $cardPatternColor2;
-    background: repeating-linear-gradient(
-      315deg,
-      $cardPatternColor1,
-      $cardPatternColor1 4px,
-      $cardPatternColor2 4px,
-      $cardPatternColor2 8px
-    )
+    //border: 6px solid $cardPatternColor2;
+    // background: repeating-linear-gradient(
+    //   315deg,
+    //   $cardPatternColor1,
+    //   $cardPatternColor1 4px,
+    //   $cardPatternColor2 4px,
+    //   $cardPatternColor2 8px
+    // )
+    background: $cardBg;
   }
 }
 
