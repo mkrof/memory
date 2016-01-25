@@ -15,7 +15,7 @@ const App = React.createClass({
 
   render () {
     return (
-      <div>
+      <div className="board">
         <ul className="cards">
           {
             this.props.cards.map((c, i) => {

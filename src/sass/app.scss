@@ -1,34 +1,77 @@
 $cardSize: 128px;
+$cardMargin: 6px;
 $imagePadding: 10px;
+$numCols: 6;
 
-$cardPatternColor1: #519548;
-$cardPatternColor2: #88C425;
-$cardBg: #A5D6CC;
+$cBold: #1B676B;
+$cBase: #EAFDE6;
+$c1: #519548;
+$c2: #88C425;
+$c3: #BEF202;
+
+$cardPatternColor: $c2;
+$cardImageBg: $cBase;
+
+$glowDelay: 0.4s;
+$glowDuration: 0.4s;
+$glowColor: $c2;
 
 body {
-  background: #EAFDE6;
+  background: $cBold;
+}
+
+.board {
+  display: flex;
+  justify-content: center;
+  min-width: $numCols * ($cardSize + $cardMargin * 2);
 }
 
 .cards {
   list-style-type: none;
+  padding: 0;
+  width: $numCols * ($cardSize + $cardMargin * 2);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-container, .front, .back {
+  width: $cardSize;
+  height: $cardSize;
 }
 
 .card-container {
-  margin: 13px;
-  float: right;
+  margin: $cardMargin;
   perspective: 700px;
-  &.shown .card {
-    transform: rotateY(180deg);
+
+  .card {
+    transition: 0.4s;
+    transform-style: preserve-3d;
+    position: relative;
   }
-  &.matched .card .back {
-    animation-name: glow;
-    animation-duration: 0.4s;
-    animation-timing-function: ease-out;
-    animation-delay: 0.4s;
+
+  .front, .back {
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.43);
   }
+
+  .front {
+    background: repeating-linear-gradient(
+      315deg,
+      $cardPatternColor,
+      $cardPatternColor 4px,
+      darken($cardPatternColor, 3%) 4px,
+      darken($cardPatternColor, 3%) 8px
+    );
+    z-index: 2;
+  }
+
   .back {
     transform: rotateY(180deg);
-    background-color: white;
+    background-color: $cardImageBg;
+
     .image {
       background-size: contain;
       background-position: center;
@@ -38,45 +81,21 @@ body {
       height: $cardSize - $imagePadding;
     }
   }
-  .front {
-    //border: 6px solid $cardPatternColor2;
-    // background: repeating-linear-gradient(
-    //   315deg,
-    //   $cardPatternColor1,
-    //   $cardPatternColor1 4px,
-    //   $cardPatternColor2 4px,
-    //   $cardPatternColor2 8px
-    // )
-    background: $cardBg;
+
+  &.shown .card {
+    transform: rotateY(180deg);
+  }
+
+  &.matched .card .back {
+    animation-name: glow;
+    animation-duration: $glowDuration;
+    animation-timing-function: ease-out;
+    animation-delay: $glowDelay;
   }
 }
 
 @keyframes glow {
   0% { box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.43); }
-  50% { box-shadow:0px 0px 10px 3px #2AA02A; }
+  50% { box-shadow:0px 0px 10px 3px $glowColor; }
   100% { box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.43); }
-}
-
-.card-container, .front, .back {
-  width: $cardSize;
-  height: $cardSize;
-}
-
-.card {
-  transition: 0.4s;
-  transform-style: preserve-3d;
-  position: relative;
-}
-
-.front, .back {
-  backface-visibility: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.43);
-}
-
-.front {
-  z-index: 2;
-  background: #CCC;
 }
