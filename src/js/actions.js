@@ -128,7 +128,7 @@ export const onCardClick = id => {
       store.dispatch(revealCard(id));
       setTimeout(() => {
         store.dispatch(hideUnmatched([clickedCard.id, shownCards[0].id]));
-      }, 1500);
+      }, config.showCardDuration);
     }
   }
 };

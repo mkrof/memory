@@ -9,6 +9,7 @@ export default {
   },{
     label: 'Hard',
     cardCount: 15
-  }]
+  }],
+  showCardDuration: 1500
 };
 
