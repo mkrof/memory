@@ -1,4 +1,4 @@
-import { REVEAL_CARD, HIDE_UNMATCHED, COMPLETE_MATCH, RENDER_CARDS, CLOSE_MODAL, SET_DIFFICULTY } from './actions';
+import { REVEAL_CARD, HIDE_CARDS, HIDE_UNMATCHED, COMPLETE_MATCH, RENDER_CARDS, CLOSE_MODAL, SET_DIFFICULTY } from './actions';
 import assign from 'lodash.assign';
 import findIndex from 'lodash.findIndex';
 import config from './config';
@@ -29,6 +29,13 @@ export default (state = initialState, action = {}) => {
     case REVEAL_CARD:
       const index = findIndex(state.cards, card => card.id === action.payload);
       return changeCardState(state, index, {isShown: true});
+
+    case HIDE_CARDS:
+      // TODO - refactor.
+      const t1 = findIndex(state.cards, card => card.id === action.payload[0].id);
+      const t2 = findIndex(state.cards, card => card.id === action.payload[1].id);
+      const temp2 = changeCardState(state, t1, {isShown: false});
+      return changeCardState(temp2, t2, {isShown: false});
 
     case HIDE_UNMATCHED:
       return assign({}, state, {

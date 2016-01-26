@@ -7,6 +7,7 @@ import config from './config';
 
 export const REVEAL_CARD = 'memory.revealcard';
 export const COMPLETE_MATCH = 'memory.completematch';
+export const HIDE_CARDS = 'memory.hidecards';
 export const HIDE_UNMATCHED = 'memory.hideunmatched';
 export const RENDER_CARDS = 'memory.rendercards';
 export const CLOSE_MODAL = 'memory.closemodal';
@@ -29,6 +30,13 @@ export const revealCard = id => {
 export const completeMatch = payload => {
   return {
     type: COMPLETE_MATCH,
+    payload
+  };
+};
+
+export const hideCards = payload => {
+  return {
+    type: HIDE_CARDS,
     payload
   };
 };
@@ -107,8 +115,14 @@ export const onCardClick = id => {
   const shownCards = cards.filter(c => c.isShown && !c.isMatched);
 
 // if the clicked card is shown or matched, do nothing.
-// if there are already 2 shown unmatched cards, do nothing.
-  if (clickedCard.isMatched || clickedCard.isShown || shownCards.length === 2) {
+  if (clickedCard.isMatched || clickedCard.isShown) {
+    return;
+  }
+
+// if there are already 2 shown unmatched cards, hide them and show the clicked card.
+  if (shownCards.length === 2) {
+    store.dispatch(hideCards(shownCards));
+    store.dispatch(revealCard(id));
     return;
   }
 
@@ -127,7 +141,7 @@ export const onCardClick = id => {
     } else {
       store.dispatch(revealCard(id));
       setTimeout(() => {
-        store.dispatch(hideUnmatched([clickedCard.id, shownCards[0].id]));
+        store.dispatch(hideCards(shownCards.concat([clickedCard])));
       }, config.showCardDuration);
     }
   }
