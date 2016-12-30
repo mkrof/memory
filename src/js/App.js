@@ -28,18 +28,18 @@ const App = React.createClass({
           <form>
             {
               config.difficulties.map((d, i) => {
-                const id = `difficulty-${i}`
-                return <p key={ i }>
-                  <input type="radio" 
+                const id = `difficulty-${i}`;
+                return (<p key={ i }>
+                  <input type="radio"
                     name="difficulty"
-                    id={ id } 
-                    label={ d.label } 
-                    value={ d.cardCount } 
+                    id={ id }
+                    label={ d.label }
+                    value={ d.cardCount }
                     checked={ this.props.difficulty === d.cardCount }
                     onChange={ e => onDifficultyChange(e.target.value) }
                   />
                   <label htmlFor={ id }>{ d.label }</label>
-                </p>
+                </p>);
               })
             }
           </form>
