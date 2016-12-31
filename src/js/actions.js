@@ -75,7 +75,7 @@ const parseBooks = (books) => {
 const getCardArray = (coverIds, size) => {
   const cards = Array(size)
     .fill()
-    .map((c, i) => { 
+    .map((c, i) => {
       return {
         label: i,
         imageId: coverIds[i],
@@ -92,17 +92,13 @@ const getCardArray = (coverIds, size) => {
       return card;
     })
   );
-
 };
 
 export const startGame = difficulty => {
-  console.log('starting', store.getState().difficulty);
   store.dispatch(closeModal());
   fetchBooks().then(response => response.json())
     .then(parseBooks)
-    .then(coverIds => {
-      store.dispatch(renderCards(getCardArray(coverIds, store.getState().difficulty)));
-    });
+    .then(coverIds => store.dispatch(renderCards(getCardArray(coverIds, difficulty))));
 };
 
 export const onDifficultyChange = difficulty => {
